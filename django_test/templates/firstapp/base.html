@@ -1,7 +1,11 @@
-{% extends "firstapp/base.html" %}
-{% block title %}about{% endblock title %}
-{% block header %}Сведения о компании{% endblock header %}
-{% block content %}
-<p>Интеллектуальные программные системы</p>
-<p>Связка шаблонов about.html и base.html</p>{% endblock content %}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock %} </title>
+</head>
+<body>
+    {% block content %} {% endblock %}
+</body>
+</html>

@@ -5,7 +5,9 @@ from django.template.response import TemplateResponse
 
 
 def index(request):
-    return render(request, "firstapp/home.html")
+    cat = ["Ноутбуки", "Принтеры", "Сканеры", "Диски", "Шнуры"]
+    return render(request, "firstapp/index.html", context={"cat": cat})
+
     #header = "Персональные данные" # обычная переменная
     #langs = ["Английский", "Немецкий", "Испанский"] # массив
     #user = {"name": "Максим,", "age": 30} # словарь
