@@ -1,3 +1,4 @@
+from .forms import UserForm
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.http import *
@@ -5,15 +6,14 @@ from django.template.response import TemplateResponse
 
 
 def index(request):
-    cat = ["Ноутбуки", "Принтеры", "Сканеры", "Диски", "Шнуры"]
-    return render(request, "firstapp/index.html", context={"cat": cat})
-
-    #header = "Персональные данные" # обычная переменная
-    #langs = ["Английский", "Немецкий", "Испанский"] # массив
-    #user = {"name": "Максим,", "age": 30} # словарь
-    #addr = ("Виноградная", 23, 45) # кортеж
-    #data = {"header": header, "langs": langs, "user": user, "address": addr}
-    #return TemplateResponse(request, "index.html", data)
+    if request.method == "POST":
+        name = request.POST.get("name") 
+        age = request.POST.get("age")
+        output = "<h2>Пользователь</h2><h3>Имя - {0}, Возраст – {1}</h3>".format(name, age)
+        return HttpResponse(output)
+    else:
+        userform = UserForm()
+        return render(request, "firstapp/index.html", {"form": userform})
 
 def products(request, productid):
     category = request.GET.get("cat", "")
