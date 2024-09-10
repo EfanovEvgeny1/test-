@@ -6,14 +6,9 @@ from django.template.response import TemplateResponse
 
 
 def index(request):
-    if request.method == "POST":
-        name = request.POST.get("name") 
-        age = request.POST.get("age")
-        output = "<h2>Пользователь</h2><h3>Имя - {0}, Возраст – {1}</h3>".format(name, age)
-        return HttpResponse(output)
-    else:
-        userform = UserForm()
-        return render(request, "firstapp/index.html", {"form": userform})
+    userform = UserForm()
+    return render(request, "firstapp/index.html", {"form": userform})
+
 
 def products(request, productid):
     category = request.GET.get("cat", "")
