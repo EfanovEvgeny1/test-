@@ -1,6 +1,7 @@
 from django import forms
 
 class UserForm(forms.Form):
+    """
     name = forms.CharField(label="Имя клиента", max_length=15, help_text="ФИO не более 15 символов")
     age = forms.IntegerField(label="Возраст клиента")
     email = forms.EmailField(label="Электронный адрес", help_text="Обязательный символ - @")
@@ -15,4 +16,13 @@ class UserForm(forms.Form):
                                   fields=[forms.URLField(), forms.CharField(max_length=20)])
     file_path = forms.FilePathField(label="Выберите файл", path="D:/",
                                     allow_files="True", allow_folders="True")
-    file = forms.FileField(label="Файл")
+    file = forms.ImageField(label="Изображение")
+    """
+    date = forms.DateField(label="Введите дату")
+
+    city = forms.TypedMultipleChoiceField(label="Выберите город",
+                                          empty_value=None, 
+                                          choices=((1, "Москва"), 
+                                                   (2, "Воронеж"),
+                                                   (3, "Курск"),
+                                                   (4, "Томск")))
