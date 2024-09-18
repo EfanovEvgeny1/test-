@@ -3,19 +3,46 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.http import *
 from django.template.response import TemplateResponse
+from .models import Person
 
 
 def index(request):
+    people = Person.objects.all()
+    return render(request, "index.html", {"people": people})
+
+
+def create(request):
     if request.method == "POST":
-        userform = UserForm(request.POST)
-        if userform.is_valid():
-            name = userform.cleaned_data["name"]
-            return HttpResponse("<h2>Имя введено коррректно – {0}</h2>".format(name))
+        klient = Person()
+        klient.name = request.POST.get("name")
+        klient.age = request.POST.get("age")
+        klient.save()
+    return HttpResponseRedirect("/")
+
+
+
+def edit(request, id):
+    try:
+        person = Person.objects.get(id=id)
+        
+        if request.method == "POST":
+            person.name = request.POST.get("name")
+            person.age = request.POST.get("age")
+            person.save()
+            return HttpResponseRedirect("/")
         else:
-            return HttpResponse("Ошибка ввода данных")
-    else:
-        userform = UserForm()
-        return render(request, "firstapp/index.html", {"form": userform})
+            return render(request, "edit.html", {"person": person})
+    except Person.DoesNotExist:
+        return HttpResponseNotFound("<h2>Клиент не найден</h2>")
+
+
+def delete(request, id):
+    try:
+        person = Person.objects.get(id=id)
+        person.delete()
+        return HttpResponseRedirect("/")
+    except Person.DoesNotExist:
+        return HttpResponseNotFound("<h2>Клиент не найден</h2>")
 
 
 
